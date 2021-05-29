@@ -1,0 +1,106 @@
+<div class="row" align="center">
+	<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#add">
+		<span class="glyphicon glyphicon-plus"></span>ADD STUDENT
+	</button>
+	<div student-add></div>
+
+</div>
+<div align="center" class="row">
+	<div class="col-sm-12">
+		<table class="table table-stripted table-bordered">
+			<thead>
+				<th data-ng-click="orderBy('id')"><strong>REG ID</strong></th>
+				<th data-ng-click="orderBy('fname')"><strong>NAME</strong></th>
+				<th><strong>GENDER</strong></th>
+                <th><strong>DATE OF BIRTH</strong></th>
+				<th><strong>ACTIVE</strong></th>
+				<th><strong>ADMITTED ON </strong></th>
+				<th><strong>CONTACT 1 </strong></th>
+				<th><strong>CONTACT 2 </strong></th>
+				<th><strong>EMAIL 1</strong></th>
+				<th><strong>EMAIL 2</strong></th>
+				<th><strong>ADDRESS</strong></th>
+				<th><strong>AADHAAR ID</strong></th>
+				<th><strong>PHOTO</strong></th>
+				<th colspan="2">ACTION </strong></th>
+			</thead>
+			<tr ng-repeat="student in students | orderBy : ordering">
+
+				<td>{{student.id}}</td>
+
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.fname}}" ng-model="student.fname" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.fname}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<select class="form-control" id="class" ng-model="student.gender" ng-selected="student.gender">
+							<option>MALE</option>
+							<option>FEMALE</option>
+						</select>
+					</div>
+
+					<div ng-hide="editorEnabled[$index]">{{student.gender}}</div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="date" id="DOB" name="DOB" ng-model="student.DOB" value="{{student.DOB | date}}" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.DOB}}</div>
+				</td>
+				<td>{{student.active}}</td>
+				<td>{{student.admittedOn}}</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.contact}}" ng-model="student.contact" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.contact}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.contact2}}" ng-model="student.contact2" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.contact2}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.email}}" ng-model="student.email" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.email}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.email2}}" ng-model="student.email2" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.email2}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.address}}" ng-model="student.address" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.address}} </div>
+				</td>
+				<td>
+					<div ng-show="editorEnabled[$index]">
+						<input type="text" value="{{student.aadhaarId}}" ng-model="student.aadhaarId" />
+					</div>
+					<div ng-hide="editorEnabled[$index]">{{student.aadhaarId}} </div>
+				</td>
+				<td>{{student.photo}}</td>
+
+				<td>
+					<div ng-hide="editorEnabled[$index]">
+						<button class="btn btn-info" data-ng-click="enableEditor($index)">Edit</button>
+						<button class="btn btn-danger" data-ng-click="deleteStudent(student)">Delete</button>
+					</div>
+					<div ng-show="editorEnabled[$index]">
+						<button class="btn btn-success" data-ng-click="editStudent($index,student)">Save</button>
+						<button class="btn btn-danger" ng-click="disableEditor($index)">Cancel</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

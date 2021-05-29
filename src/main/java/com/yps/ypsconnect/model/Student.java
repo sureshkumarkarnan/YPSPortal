@@ -1,12 +1,5 @@
 package com.yps.ypsconnect.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +17,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "STUDENT")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "ptype", discriminatorType = DiscriminatorType.STRING)
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = -3490095930809666192L;
@@ -41,8 +32,6 @@ public class Student implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "REG_ID", length = 8, nullable = false, unique = true)
-	private String regId;
 
 	@Column(name = "FULLNAME", length = 80, unique = false)
 	@NonNull
@@ -58,6 +47,12 @@ public class Student implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date admittedOn;
 
+	@Column(name="FATHERNAME", columnDefinition = "varchar(80) default ' '")
+    private String fathername ;
+    
+    @Column(name="MOTHERNAME", columnDefinition = "varchar(80) default ' '")
+    private String mothername;
+    
 	@PrePersist
 	void admittedOn() {
 		this.admittedOn = new Date();

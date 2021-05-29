@@ -30,8 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
-@Controller
-
+@RestController
 public class YPSConnectStudentController {
 
 	private final YPSConnectStudentService StudentService;
@@ -43,16 +42,59 @@ public class YPSConnectStudentController {
 	
 	
 	@RequestMapping(value = "/students", method = RequestMethod.GET)
+    public List<Student> list(Model model) {
+        System.out.println("Returning students:");
+        return  StudentService.listAllStudents();
+    }
+	
+	  @RequestMapping(value="/students/{id}", method=RequestMethod.GET)
+	    public Student getStudent(@PathVariable("id") Long id) {
+	     
+		  Optional<Student> s = StudentService.getStudent(id);
+	        System.out.println("Returning student with id :"+ id);
+	        return s.get();
+	    }
+	  
+	
+	 @RequestMapping(value="/students/{id}", method=RequestMethod.DELETE)
+	    @ResponseStatus(HttpStatus.OK)
+	    public void deleteStudent(@PathVariable("id") Long id) {
+		 StudentService.delete(id);
+	    }
+	 		
+	@RequestMapping(value="/students", method=RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+	public void addStudent(@RequestBody Student student) {
+        // save employee to database
+	    System.out.println("Creating new  student :");
+		StudentService.addStudent(student);
+    }
+
+	
+	@RequestMapping(value="/students/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<?> editStudent(@RequestBody Student student, @PathVariable("id") Long id) {
+		try {
+	        System.out.println("REST::editStudent :: "+ id);
+	     //   Optional<Student> s = StudentService.getStudent(id);
+			StudentService.editStudent(student);
+	        return new ResponseEntity<>(HttpStatus.OK);
+	    } catch (NoSuchElementException e) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }  
+    }
+	
+/*	@RequestMapping(value = "/students", method = RequestMethod.GET)
     public String viewStudents(Model model) {
         System.out.println("Returning students:");
         return  findPaginated(1, "fname", "asc", model);	
     }
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-    public String viewHomePage(Model model) {
-       
-        return  "redirect:/students";	
+	@RequestMapping(value = "/students", method = RequestMethod.GET)
+    public List<Student> list(Model model) {
+        System.out.println("Returning students:");
+        return  StudentService.listAllStudents();
     }
+	
 	
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
 			@RequestParam("sortField") String sortField,
@@ -76,6 +118,6 @@ public class YPSConnectStudentController {
 		model.addAttribute("listStudents", listStudents);
 		return "list-employees";
 	
-	}
+	}*/
 	
 }

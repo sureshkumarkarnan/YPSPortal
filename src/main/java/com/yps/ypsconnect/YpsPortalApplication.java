@@ -20,8 +20,6 @@ import com.yps.ypsconnect.model.EmailAddress;
 import com.yps.ypsconnect.model.PhoneNumber;
 import com.yps.ypsconnect.model.Student;
 import com.yps.ypsconnect.model.Student.Gender;
-import com.yps.ypsconnect.model.StudentWithParent;
-import com.yps.ypsconnect.model.StudentWithoutParent;
 import com.yps.ypsconnect.repositories.YPSConnectStudentRepository;
 
 import com.yps.ypsconnect.service.YPSConnectStudentService;
